@@ -101,7 +101,7 @@ const NavBar = (props) => {
                   <MenuItem as={Link}>Projects</MenuItem>
                 </NextLink>
                 <NextLink
-                  href="https://github.com/danny-rashd/twt-sentiment-webapp"
+                  href="https://github.com/danny-rashd/dannyrashd-portfolio"
                   passHref
                 >
                   <MenuItem as={Link}>View Source Code</MenuItem>
