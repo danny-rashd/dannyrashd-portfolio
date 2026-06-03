@@ -138,6 +138,8 @@ const ExperienceItem = ({ item, isLast }) => {
 const SkillGroup = ({ label, items }) => {
   const cardBg = useColorModeValue("gray.50", "navy.800");
   const borderColor = useColorModeValue("gray.200", "navy.700");
+  const skillColor = useColorModeValue("gray.600", "slate.300");
+  const skillBorderColor = useColorModeValue("gray.300", "navy.600");
 
   return (
     <Box
@@ -160,9 +162,9 @@ const SkillGroup = ({ label, items }) => {
               fontFamily="mono"
               fontSize="xs"
               bg="transparent"
-              color={useColorModeValue("gray.600", "slate.300")}
+              color={skillColor}
               border="1px solid"
-              borderColor={useColorModeValue("gray.300", "navy.600")}
+              borderColor={skillBorderColor}
               px={2}
               py={0.5}
             >

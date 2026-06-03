@@ -25,7 +25,7 @@ const NotFound = () => {
       </Heading>
 
       <Text fontFamily="mono" color={mutedColor} fontSize="sm" mb={10}>
-        // the page you are looking for does not exist
+        {'// the page you are looking for does not exist'}
       </Text>
 
       <Box

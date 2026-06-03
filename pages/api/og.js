@@ -65,7 +65,7 @@ export default function handler() {
             marginBottom: "12px",
           }}
         >
-          // Data Engineer
+          {'// Data Engineer'}
         </div>
 
         {/* location */}
@@ -75,7 +75,7 @@ export default function handler() {
             color: "#a6adc8",
           }}
         >
-          // Kuala Lumpur, Malaysia
+          {'// Kuala Lumpur, Malaysia'}
         </div>
 
         {/* bottom url */}
