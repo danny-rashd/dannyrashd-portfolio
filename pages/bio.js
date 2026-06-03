@@ -177,6 +177,38 @@ const SkillGroup = ({ label, items }) => {
   );
 };
 
+const EducationItem = ({ item }) => {
+  const primaryColor = useColorModeValue("gray.800", "slate.200");
+  const secondaryColor = useColorModeValue("gray.600", "slate.300");
+  const tertiaryColor = useColorModeValue("gray.500", "slate.400");
+  const mutedColor = useColorModeValue("gray.400", "slate.400");
+
+  return (
+    <Box fontFamily="mono" fontSize="sm" mb={2}>
+      <Text color={primaryColor} fontWeight="bold">{item.institution}</Text>
+      <Text color={secondaryColor}>{item.degree}</Text>
+      {item.major && (
+        <Text color={tertiaryColor} fontSize="xs">{item.major}</Text>
+      )}
+      <Text color={mutedColor} fontSize="xs">
+        {item.period}{item.note ? ` · ${item.note}` : ""}
+      </Text>
+    </Box>
+  );
+};
+
+const CertItem = ({ cert }) => {
+  const primaryColor = useColorModeValue("gray.800", "slate.200");
+  const mutedColor = useColorModeValue("gray.500", "slate.400");
+
+  return (
+    <Box fontFamily="mono" fontSize="sm" mb={2}>
+      <Text color={primaryColor}>{cert.title}</Text>
+      <Text color={mutedColor} fontSize="xs">{cert.issuer}</Text>
+    </Box>
+  );
+};
+
 const Bio = () => {
   return (
     <Container maxW="container.md">
@@ -204,30 +236,12 @@ const Bio = () => {
 
       <SectionLabel>education</SectionLabel>
       {education.map((item) => (
-        <Box key={item.institution} fontFamily="mono" fontSize="sm" mb={2}>
-          <Text color={useColorModeValue("gray.800", "slate.200")} fontWeight="bold">
-            {item.institution}
-          </Text>
-          <Text color={useColorModeValue("gray.600", "slate.300")}>{item.degree}</Text>
-          {item.major && (
-            <Text color={useColorModeValue("gray.500", "slate.400")} fontSize="xs">
-              {item.major}
-            </Text>
-          )}
-          <Text color={useColorModeValue("gray.400", "slate.400")} fontSize="xs">
-            {item.period}{item.note ? ` · ${item.note}` : ""}
-          </Text>
-        </Box>
+        <EducationItem key={item.institution} item={item} />
       ))}
 
       <SectionLabel>certifications</SectionLabel>
       {certifications.map((cert) => (
-        <Box key={cert.title} fontFamily="mono" fontSize="sm" mb={2}>
-          <Text color={useColorModeValue("gray.800", "slate.200")}>{cert.title}</Text>
-          <Text color={useColorModeValue("gray.500", "slate.400")} fontSize="xs">
-            {cert.issuer}
-          </Text>
-        </Box>
+        <CertItem key={cert.title} cert={cert} />
       ))}
 
       <SectionLabel>skills</SectionLabel>

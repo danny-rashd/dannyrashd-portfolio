@@ -32,10 +32,10 @@ const Home = () => {
           </Heading>
 
           <Text fontFamily="mono" color="accent" fontSize="md" mb={1}>
-            // {bio.role}
+            {'// '}{bio.role}
           </Text>
           <Text fontFamily="mono" color={mutedColor} fontSize="sm" mb={6}>
-            // {bio.location}
+            {'// '}{bio.location}
           </Text>
 
           <Text
