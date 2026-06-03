@@ -1,17 +1,10 @@
 import { Box, Container, Stack, Link, Text, useColorModeValue } from "@chakra-ui/react";
 import { ExternalLinkIcon } from "@chakra-ui/icons";
-import { bio, resumeConfig } from "../lib/data";
-
-const getResumeUrl = () => {
-  const now = new Date();
-  const switchDate = new Date(resumeConfig.switchDate);
-  return now >= switchDate ? resumeConfig.after : resumeConfig.before;
-};
+import { bio } from "../lib/data";
 
 const Footer = () => {
   const borderColor = useColorModeValue("gray.200", "navy.700");
   const mutedColor = useColorModeValue("gray.400", "slate.400");
-  const resumeUrl = getResumeUrl();
 
   return (
     <Box borderTop="1px solid" borderColor={borderColor} mt={16}>
@@ -37,7 +30,7 @@ const Footer = () => {
             <Link href={bio.linkedin} isExternal _hover={{ color: "accent" }}>
               linkedin <ExternalLinkIcon />
             </Link>
-            <Link href={resumeUrl} download="Danial_Rashid_Resume.pdf" _hover={{ color: "accent" }}>
+            <Link href="/api/resume" isExternal _hover={{ color: "accent" }}>
               resume <ExternalLinkIcon />
             </Link>
           </Stack>
