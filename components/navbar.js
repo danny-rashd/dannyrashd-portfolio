@@ -5,7 +5,6 @@ import {
   Box,
   Link,
   Stack,
-  Heading,
   Flex,
   Menu,
   MenuItem,
@@ -13,105 +12,144 @@ import {
   MenuButton,
   IconButton,
   useColorModeValue,
+  useColorMode,
+  Text,
 } from "@chakra-ui/react";
-import { HamburgerIcon } from "@chakra-ui/icons";
+import { HamburgerIcon, MoonIcon, SunIcon } from "@chakra-ui/icons";
+import { bio } from "../lib/data";
 
 const LinkItem = ({ href, path, target, children, ...props }) => {
   const active = path === href;
-  const inactiveColor = useColorModeValue("gray200", "whiteAlpha.900");
+  const mutedColor = useColorModeValue("gray.500", "slate.400");
 
   return (
-    <NextLink href={href} passHref scroll={false}>
-      <Link
-        p={2}
-        bg={active ? "grassTeal" : undefined}
-        color={active ? "#202023" : inactiveColor}
-        target={target}
-        {...props}
-      >
-        {children}
-      </Link>
-    </NextLink>
+    <Link
+      as={NextLink}
+      href={href}
+      scroll={false}
+      target={target}
+      fontFamily="mono"
+      fontSize="sm"
+      color={active ? "accent" : mutedColor}
+      borderBottom={active ? "1px solid" : "1px solid transparent"}
+      borderColor={active ? "accent" : "transparent"}
+      pb="2px"
+      _hover={{ color: "accent", borderColor: "accent" }}
+      transition="all 0.2s"
+      {...props}
+    >
+      {children}
+    </Link>
   );
 };
+
 const NavBar = (props) => {
   const { path } = props;
+  const { colorMode, toggleColorMode } = useColorMode();
+  const bg = useColorModeValue("#eff1f5cc", "#1e1e2ecc");
+  const borderColor = useColorModeValue("gray.200", "navy.700");
+
   return (
     <Box
       position="fixed"
       as="nav"
       w="100%"
-      bg={useColorModeValue("#ffffff40", "#20202380")}
-      style={{ backdropFilter: "blur(10px)" }}
-      zIndex={1}
+      bg={bg}
+      borderBottom="1px solid"
+      borderColor={borderColor}
+      style={{ backdropFilter: "blur(12px)" }}
+      zIndex={10}
       {...props}
     >
       <Container
         display="flex"
-        p={2}
-        maxW={"container.md"}
-        wrap="wrap"
+        py={4}
+        px={{ base: 5, md: 6 }}
+        maxW="container.md"
         align="center"
         justify="space-between"
       >
-        <Flex align="center" mr={5}>
-          <Heading as="h1" size="lg" letterSpacing={"tighter"}>
-            <Logo />
-          </Heading>
+        <Flex align="center" mr={10}>
+          <Logo />
         </Flex>
+
         <Stack
-          direction={{ base: "column", md: "row" }}
+          direction="row"
           display={{ base: "none", md: "flex" }}
-          width={{ base: "full", md: "auto" }}
           alignItems="center"
+          spacing={8}
           flexGrow={1}
-          mt={{ base: 4, md: 0 }}
         >
           <LinkItem href="/bio" path={path}>
-            About Me
+            ./about
           </LinkItem>
           <LinkItem href="/projects" path={path}>
-            Projects
+            ./projects
           </LinkItem>
-          <LinkItem
-            href="https://github.com/danny-rashd/twt-sentiment-webapp"
-            path={path}
-            display="inline-flex"
-            alignItems="center"
-            style={{ gap: 4 }}
-            pl={2}
-          >
-            Source Code
+          <LinkItem href={bio.github} path={path} target="_blank">
+            ./github
           </LinkItem>
         </Stack>
-        <Box flex={1} align="right">
-          <Box ml={2} display={{ base: "inline-block", md: "none" }}>
+
+        <Flex align="center" gap={4} ml={4}>
+          <IconButton
+            aria-label="Toggle color mode"
+            icon={colorMode === "light" ? <MoonIcon /> : <SunIcon />}
+            onClick={toggleColorMode}
+            variant="outline"
+            size="md"
+            borderColor={useColorModeValue("gray.300", "navy.600")}
+            color={useColorModeValue("gray.500", "slate.400")}
+            _hover={{ borderColor: "accent", color: "accent", bg: "transparent" }}
+            transition="all 0.2s"
+          />
+          <Box display={{ base: "inline-block", md: "none" }}>
             <Menu>
               <MenuButton
                 as={IconButton}
                 icon={<HamburgerIcon />}
                 variant="outline"
-                aria-label="Options"
+                size="sm"
+                aria-label="Menu"
+                borderColor={useColorModeValue("gray.300", "navy.600")}
+                color={useColorModeValue("gray.500", "slate.400")}
+                _hover={{ borderColor: "accent", color: "accent" }}
               />
-              <MenuList>
-                <NextLink href="/about" passHref>
-                  <MenuItem as={Link}>About Me</MenuItem>
-                </NextLink>
-                <NextLink href="/projects" passHref>
-                  <MenuItem as={Link}>Projects</MenuItem>
-                </NextLink>
-                <NextLink
-                  href="https://github.com/danny-rashd/dannyrashd-portfolio"
-                  passHref
+              <MenuList
+                bg={useColorModeValue("white", "navy.800")}
+                borderColor={useColorModeValue("gray.200", "navy.700")}
+                fontFamily="mono"
+                fontSize="sm"
+              >
+                <MenuItem
+                  as={NextLink}
+                  href="/bio"
+                  _hover={{ color: "accent", bg: "transparent" }}
                 >
-                  <MenuItem as={Link}>View Source Code</MenuItem>
-                </NextLink>
+                  ./about
+                </MenuItem>
+                <MenuItem
+                  as={NextLink}
+                  href="/projects"
+                  _hover={{ color: "accent", bg: "transparent" }}
+                >
+                  ./projects
+                </MenuItem>
+                <MenuItem
+                  as={NextLink}
+                  href={bio.github}
+                  target="_blank"
+                  _hover={{ color: "accent", bg: "transparent" }}
+                >
+                  ./github
+                </MenuItem>
               </MenuList>
             </Menu>
           </Box>
-        </Box>
+        </Flex>
       </Container>
     </Box>
   );
 };
+
 export default NavBar;

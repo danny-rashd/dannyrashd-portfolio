@@ -1,38 +1,28 @@
 import Link from "next/link";
-import Image from "next/image";
-import { Text, useColorModeValue } from "@chakra-ui/react";
-import styled from "@emotion/styled";
+import { Box, Text, useColorModeValue } from "@chakra-ui/react";
 
-const LogoContainer = styled.span`
-  font-weight: bold;
-  font-size: 18px;
-  display: inline-flex;
-  align-items: center;
-  height: 30px;
-  line-height: 20px;
-  padding: 10px;
-
-  &:hover img {
-    transform: rotate(45deg);
-  }
-`;
 const Logo = () => {
-  const img = `/images/download${useColorModeValue("", "-dark")}.png`;
+  const textColor = useColorModeValue("gray.700", "slate.200");
+
   return (
     <Link href="/">
-      <a>
-        <LogoContainer>
-            <Image src={img} width={20} height={20} alt="logo"/>
-            <Text color={useColorModeValue('gray.800','whiteAlpha.900')}
-            fontFamily='M PLUS Rounded 1c'
-            fontWeight='bold'
-            fontSize={20}
-            ml={2}>
-                Danial Rashid
-            </Text>
-        </LogoContainer>
-      </a>
+      <Box
+        display="inline-flex"
+        alignItems="center"
+        fontFamily="mono"
+        fontWeight="bold"
+        fontSize="lg"
+        letterSpacing="tight"
+        _hover={{ opacity: 0.8 }}
+        transition="opacity 0.2s"
+        cursor="pointer"
+      >
+        <Text as="span" color="accent">&lt;</Text>
+        <Text as="span" color={textColor}>DR</Text>
+        <Text as="span" color="accent"> /&gt;</Text>
+      </Box>
     </Link>
   );
 };
+
 export default Logo;

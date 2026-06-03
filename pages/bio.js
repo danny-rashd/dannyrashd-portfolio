@@ -1,0 +1,241 @@
+import {
+  Container,
+  Box,
+  Heading,
+  Text,
+  Badge,
+  Wrap,
+  WrapItem,
+  Link,
+  Divider,
+  useColorModeValue,
+} from "@chakra-ui/react";
+import Image from "next/image";
+import { bio, experience, education, certifications, skills } from "../lib/data";
+
+const SectionLabel = ({ children }) => (
+  <Text
+    fontFamily="mono"
+    fontSize="xs"
+    color="accent"
+    letterSpacing="widest"
+    textTransform="uppercase"
+    mb={4}
+    mt={10}
+  >
+    &gt; {children}
+  </Text>
+);
+
+const ExperienceItem = ({ item, isLast }) => {
+  const borderColor = useColorModeValue("gray.200", "navy.700");
+  const cardBg = useColorModeValue("gray.50", "navy.800");
+  const mutedColor = useColorModeValue("gray.500", "slate.400");
+
+  return (
+    <Box display="flex" gap={4} mb={isLast ? 0 : 8}>
+      <Box
+        display="flex"
+        flexDirection="column"
+        alignItems="center"
+        flexShrink={0}
+        pt={1}
+      >
+        <Box
+          w="10px"
+          h="10px"
+          borderRadius="full"
+          bg="accent"
+          flexShrink={0}
+        />
+        {!isLast && (
+          <Box w="1px" flexGrow={1} bg={borderColor} mt={2} />
+        )}
+      </Box>
+
+      <Box flexGrow={1} pb={isLast ? 0 : 2}>
+        <Box display="flex" alignItems="center" gap={3} mb={1}>
+          <Box
+            bg={cardBg}
+            borderRadius="sm"
+            p={1}
+            border="1px solid"
+            borderColor={borderColor}
+            flexShrink={0}
+            w="50px"
+            h="40px"
+            display="flex"
+            alignItems="center"
+            justifyContent="center"
+          >
+            <Image
+              src={item.logo}
+              alt={item.company}
+              width={52}
+              height={28}
+              style={{ objectFit: "contain", width: "100%", height: "100%" }}
+            />
+          </Box>
+          <Box>
+            <Link
+              href={item.url}
+              isExternal
+              fontFamily="mono"
+              fontWeight="bold"
+              fontSize="sm"
+              color={useColorModeValue("gray.800", "slate.200")}
+              _hover={{ color: "accent" }}
+            >
+              {item.company}
+            </Link>
+            <Text fontFamily="mono" fontSize="xs" color={mutedColor}>
+              {item.role}
+            </Text>
+          </Box>
+          <Text
+            fontFamily="mono"
+            fontSize="xs"
+            color={mutedColor}
+            ml="auto"
+            flexShrink={0}
+          >
+            {item.period}
+          </Text>
+        </Box>
+
+        <Text
+          fontSize="sm"
+          color={useColorModeValue("gray.600", "slate.300")}
+          mb={3}
+          lineHeight="tall"
+        >
+          {item.description}
+        </Text>
+
+        <Wrap spacing={2}>
+          {item.tags.map((tag) => (
+            <WrapItem key={tag}>
+              <Badge
+                fontFamily="mono"
+                fontSize="xs"
+                bg="transparent"
+                color="accent"
+                border="1px solid"
+                borderColor="accent"
+                px={2}
+                py={0.5}
+              >
+                {tag}
+              </Badge>
+            </WrapItem>
+          ))}
+        </Wrap>
+      </Box>
+    </Box>
+  );
+};
+
+const SkillGroup = ({ label, items }) => {
+  const cardBg = useColorModeValue("gray.50", "navy.800");
+  const borderColor = useColorModeValue("gray.200", "navy.700");
+
+  return (
+    <Box
+      bg={cardBg}
+      border="1px solid"
+      borderColor={borderColor}
+      borderRadius="md"
+      p={4}
+      fontFamily="mono"
+      fontSize="sm"
+      flex={1}
+    >
+      <Text color="accent" fontSize="xs" mb={3}>
+        # {label}
+      </Text>
+      <Wrap spacing={2}>
+        {items.map((skill) => (
+          <WrapItem key={skill}>
+            <Badge
+              fontFamily="mono"
+              fontSize="xs"
+              bg="transparent"
+              color={useColorModeValue("gray.600", "slate.300")}
+              border="1px solid"
+              borderColor={useColorModeValue("gray.300", "navy.600")}
+              px={2}
+              py={0.5}
+            >
+              {skill}
+            </Badge>
+          </WrapItem>
+        ))}
+      </Wrap>
+    </Box>
+  );
+};
+
+const Bio = () => {
+  return (
+    <Container maxW="container.md">
+      <Heading as="h1" variant="page-title" mb={3}>
+        About Me
+      </Heading>
+      <Text
+        fontSize="sm"
+        color={useColorModeValue("gray.600", "slate.300")}
+        lineHeight="tall"
+      >
+        {bio.summary}
+      </Text>
+
+      <SectionLabel>experience</SectionLabel>
+      <Box>
+        {experience.map((item, i) => (
+          <ExperienceItem
+            key={item.company}
+            item={item}
+            isLast={i === experience.length - 1}
+          />
+        ))}
+      </Box>
+
+      <SectionLabel>education</SectionLabel>
+      {education.map((item) => (
+        <Box key={item.institution} fontFamily="mono" fontSize="sm" mb={2}>
+          <Text color={useColorModeValue("gray.800", "slate.200")} fontWeight="bold">
+            {item.institution}
+          </Text>
+          <Text color={useColorModeValue("gray.600", "slate.300")}>{item.degree}</Text>
+          {item.major && (
+            <Text color={useColorModeValue("gray.500", "slate.400")} fontSize="xs">
+              {item.major}
+            </Text>
+          )}
+          <Text color={useColorModeValue("gray.400", "slate.400")} fontSize="xs">
+            {item.period}{item.note ? ` · ${item.note}` : ""}
+          </Text>
+        </Box>
+      ))}
+
+      <SectionLabel>certifications</SectionLabel>
+      {certifications.map((cert) => (
+        <Box key={cert.title} fontFamily="mono" fontSize="sm" mb={2}>
+          <Text color={useColorModeValue("gray.800", "slate.200")}>{cert.title}</Text>
+          <Text color={useColorModeValue("gray.500", "slate.400")} fontSize="xs">
+            {cert.issuer}
+          </Text>
+        </Box>
+      ))}
+
+      <SectionLabel>skills</SectionLabel>
+      <Box display={{ md: "flex" }} gap={4} flexWrap="wrap">
+        {Object.entries(skills).map(([label, items]) => (
+          <SkillGroup key={label} label={label} items={items} />
+        ))}
+      </Box>
+    </Container>
+  );
+};
+
+export default Bio;
