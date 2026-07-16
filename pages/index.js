@@ -116,7 +116,7 @@ const Home = () => {
         </Text>
         <Text color={useColorModeValue("gray.700", "slate.200")}>
           Targeting Data Engineering roles. Currently building an end-to-end
-          pipeline project and pursuing Azure DP-203. Open to pipeline
+          pipeline project and pursuing Azure DP-900. Open to pipeline
           architecture, warehouse design, and data platform work.
         </Text>
       </Box>
