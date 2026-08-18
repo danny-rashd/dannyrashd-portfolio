@@ -8,32 +8,28 @@ import {
   WrapItem,
   Link,
   Stack,
-  useColorModeValue,
 } from "@chakra-ui/react";
 import { ExternalLinkIcon } from "@chakra-ui/icons";
 import { projects } from "../lib/data";
 
 const ProjectCard = ({ project }) => {
-  const cardBg = useColorModeValue("gray.50", "navy.800");
-  const borderColor = useColorModeValue("gray.200", "navy.700");
-  const mutedColor = useColorModeValue("gray.500", "slate.400");
-
   return (
     <Box
-      bg={cardBg}
+      bg="bg.surface"
       border="1px solid"
-      borderColor={borderColor}
+      borderColor="border.default"
       borderRadius="md"
       overflow="hidden"
       mb={4}
-      _hover={{ borderColor: "accent" }}
-      transition="border-color 0.2s"
+      _hover={{ borderColor: "accent", boxShadow: "md", transform: "translateY(-3px)" }}
+      transition="all 0.2s"
     >
       <Box
         px={4}
         py={2}
         borderBottom="1px solid"
-        borderColor={borderColor}
+        borderColor="border.default"
+        bg="bg.subtle"
         display="flex"
         alignItems="center"
         gap={2}
@@ -41,18 +37,13 @@ const ProjectCard = ({ project }) => {
         <Box w={3} h={3} borderRadius="full" bg="red.400" />
         <Box w={3} h={3} borderRadius="full" bg="yellow.400" />
         <Box w={3} h={3} borderRadius="full" bg="green.400" />
-        <Text fontFamily="mono" fontSize="xs" color={mutedColor} ml={2}>
+        <Text fontFamily="mono" fontSize="xs" color="text.muted" ml={2}>
           ~/{project.title}
         </Text>
       </Box>
 
       <Box p={5}>
-        <Text
-          fontSize="sm"
-          color={useColorModeValue("gray.600", "slate.300")}
-          lineHeight="tall"
-          mb={4}
-        >
+        <Text fontSize="sm" color="text.subtle" lineHeight="tall" mb={4}>
           {project.description}
         </Text>
 
@@ -82,7 +73,7 @@ const ProjectCard = ({ project }) => {
               isExternal
               fontFamily="mono"
               fontSize="xs"
-              color={mutedColor}
+              color="text.muted"
               _hover={{ color: "accent" }}
               display="flex"
               alignItems="center"
@@ -97,7 +88,7 @@ const ProjectCard = ({ project }) => {
               isExternal
               fontFamily="mono"
               fontSize="xs"
-              color={mutedColor}
+              color="text.muted"
               _hover={{ color: "accent" }}
               display="flex"
               alignItems="center"
@@ -115,7 +106,7 @@ const ProjectCard = ({ project }) => {
 const Projects = () => {
   return (
     <Container maxW="container.md">
-      <Heading as="h1" variant="page-title" mb={6}>
+      <Heading as="h1" variant="page-title" mb={6} className="fade-in-up">
         Projects
       </Heading>
       {projects.map((project) => (

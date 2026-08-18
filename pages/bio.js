@@ -7,8 +7,6 @@ import {
   Wrap,
   WrapItem,
   Link,
-  Divider,
-  useColorModeValue,
 } from "@chakra-ui/react";
 import Image from "next/image";
 import { bio, experience, education, certifications, skills } from "../lib/data";
@@ -28,12 +26,17 @@ const SectionLabel = ({ children }) => (
 );
 
 const ExperienceItem = ({ item, isLast }) => {
-  const borderColor = useColorModeValue("gray.200", "navy.700");
-  const cardBg = useColorModeValue("gray.50", "navy.800");
-  const mutedColor = useColorModeValue("gray.500", "slate.400");
-
   return (
-    <Box display="flex" gap={4} mb={isLast ? 0 : 8}>
+    <Box
+      display="flex"
+      gap={4}
+      mb={isLast ? 0 : 8}
+      p={3}
+      mx={-3}
+      borderRadius="md"
+      transition="background-color 0.2s"
+      _hover={{ bg: "bg.subtle" }}
+    >
       <Box
         display="flex"
         flexDirection="column"
@@ -49,18 +52,18 @@ const ExperienceItem = ({ item, isLast }) => {
           flexShrink={0}
         />
         {!isLast && (
-          <Box w="1px" flexGrow={1} bg={borderColor} mt={2} />
+          <Box w="1px" flexGrow={1} bg="border.default" mt={2} />
         )}
       </Box>
 
       <Box flexGrow={1} pb={isLast ? 0 : 2}>
         <Box display="flex" alignItems="center" gap={3} mb={1}>
           <Box
-            bg={cardBg}
+            bg="bg.surface"
             borderRadius="sm"
             p={1}
             border="1px solid"
-            borderColor={borderColor}
+            borderColor="border.default"
             flexShrink={0}
             w="50px"
             h="40px"
@@ -83,19 +86,19 @@ const ExperienceItem = ({ item, isLast }) => {
               fontFamily="mono"
               fontWeight="bold"
               fontSize="sm"
-              color={useColorModeValue("gray.800", "slate.200")}
+              color="text.primary"
               _hover={{ color: "accent" }}
             >
               {item.company}
             </Link>
-            <Text fontFamily="mono" fontSize="xs" color={mutedColor}>
+            <Text fontFamily="mono" fontSize="xs" color="text.muted">
               {item.role}
             </Text>
           </Box>
           <Text
             fontFamily="mono"
             fontSize="xs"
-            color={mutedColor}
+            color="text.muted"
             ml="auto"
             flexShrink={0}
           >
@@ -103,12 +106,7 @@ const ExperienceItem = ({ item, isLast }) => {
           </Text>
         </Box>
 
-        <Text
-          fontSize="sm"
-          color={useColorModeValue("gray.600", "slate.300")}
-          mb={3}
-          lineHeight="tall"
-        >
+        <Text fontSize="sm" color="text.subtle" mb={3} lineHeight="tall">
           {item.description}
         </Text>
 
@@ -136,21 +134,18 @@ const ExperienceItem = ({ item, isLast }) => {
 };
 
 const SkillGroup = ({ label, items }) => {
-  const cardBg = useColorModeValue("gray.50", "navy.800");
-  const borderColor = useColorModeValue("gray.200", "navy.700");
-  const skillColor = useColorModeValue("gray.600", "slate.300");
-  const skillBorderColor = useColorModeValue("gray.300", "navy.600");
-
   return (
     <Box
-      bg={cardBg}
+      bg="bg.surface"
       border="1px solid"
-      borderColor={borderColor}
+      borderColor="border.default"
       borderRadius="md"
       p={4}
       fontFamily="mono"
       fontSize="sm"
       flex={1}
+      transition="all 0.2s"
+      _hover={{ borderColor: "accent", boxShadow: "sm", transform: "translateY(-2px)" }}
     >
       <Text color="accent" fontSize="xs" mb={3}>
         # {label}
@@ -162,11 +157,13 @@ const SkillGroup = ({ label, items }) => {
               fontFamily="mono"
               fontSize="xs"
               bg="transparent"
-              color={skillColor}
+              color="text.subtle"
               border="1px solid"
-              borderColor={skillBorderColor}
+              borderColor="border.default"
               px={2}
               py={0.5}
+              transition="border-color 0.2s"
+              _hover={{ borderColor: "accent" }}
             >
               {skill}
             </Badge>
@@ -178,19 +175,14 @@ const SkillGroup = ({ label, items }) => {
 };
 
 const EducationItem = ({ item }) => {
-  const primaryColor = useColorModeValue("gray.800", "slate.200");
-  const secondaryColor = useColorModeValue("gray.600", "slate.300");
-  const tertiaryColor = useColorModeValue("gray.500", "slate.400");
-  const mutedColor = useColorModeValue("gray.400", "slate.400");
-
   return (
     <Box fontFamily="mono" fontSize="sm" mb={2}>
-      <Text color={primaryColor} fontWeight="bold">{item.institution}</Text>
-      <Text color={secondaryColor}>{item.degree}</Text>
+      <Text color="text.primary" fontWeight="bold">{item.institution}</Text>
+      <Text color="text.subtle">{item.degree}</Text>
       {item.major && (
-        <Text color={tertiaryColor} fontSize="xs">{item.major}</Text>
+        <Text color="text.muted" fontSize="xs">{item.major}</Text>
       )}
-      <Text color={mutedColor} fontSize="xs">
+      <Text color="text.muted" fontSize="xs">
         {item.period}{item.note ? ` · ${item.note}` : ""}
       </Text>
     </Box>
@@ -198,13 +190,10 @@ const EducationItem = ({ item }) => {
 };
 
 const CertItem = ({ cert }) => {
-  const primaryColor = useColorModeValue("gray.800", "slate.200");
-  const mutedColor = useColorModeValue("gray.500", "slate.400");
-
   return (
     <Box fontFamily="mono" fontSize="sm" mb={2}>
-      <Text color={primaryColor}>{cert.title}</Text>
-      <Text color={mutedColor} fontSize="xs">{cert.issuer}</Text>
+      <Text color="text.primary">{cert.title}</Text>
+      <Text color="text.muted" fontSize="xs">{cert.issuer}</Text>
     </Box>
   );
 };
@@ -212,16 +201,14 @@ const CertItem = ({ cert }) => {
 const Bio = () => {
   return (
     <Container maxW="container.md">
-      <Heading as="h1" variant="page-title" mb={3}>
-        About Me
-      </Heading>
-      <Text
-        fontSize="sm"
-        color={useColorModeValue("gray.600", "slate.300")}
-        lineHeight="tall"
-      >
-        {bio.summary}
-      </Text>
+      <Box className="fade-in-up">
+        <Heading as="h1" variant="page-title" mb={3}>
+          About Me
+        </Heading>
+        <Text fontSize="sm" color="text.subtle" lineHeight="tall">
+          {bio.summary}
+        </Text>
+      </Box>
 
       <SectionLabel>experience</SectionLabel>
       <Box>

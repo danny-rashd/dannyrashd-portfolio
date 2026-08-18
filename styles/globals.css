@@ -25,8 +25,22 @@ a {
   margin-left: 2px;
 }
 
-/* Catppuccin Mocha scrollbar */
+@media (prefers-reduced-motion: no-preference) {
+  @keyframes fade-in-up {
+    from { opacity: 0; transform: translateY(10px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  .fade-in-up {
+    animation: fade-in-up 0.6s ease-out both;
+  }
+}
+
+/* Catppuccin scrollbar, theme-aware (Chakra sets body.chakra-ui-light/dark) */
 ::-webkit-scrollbar       { width: 6px; }
-::-webkit-scrollbar-track { background: #1e1e2e; }
-::-webkit-scrollbar-thumb { background: #45475a; border-radius: 3px; }
-::-webkit-scrollbar-thumb:hover { background: #94e2d5; } /* Mocha teal; fine since scrollbar is always on dark bg */
+::-webkit-scrollbar-track { background: transparent; }
+
+.chakra-ui-dark  ::-webkit-scrollbar-thumb { background: #45475a; border-radius: 3px; } /* Mocha surface1 */
+.chakra-ui-dark  ::-webkit-scrollbar-thumb:hover { background: #94e2d5; } /* Mocha teal */
+.chakra-ui-light ::-webkit-scrollbar-thumb { background: #ccd0da; border-radius: 3px; } /* Latte surface0 */
+.chakra-ui-light ::-webkit-scrollbar-thumb:hover { background: #179299; } /* Latte teal */
